@@ -1,0 +1,1686 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NOVA OS - Interactive Demo</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --cyan: #00D4FF;
+            --cyan-dark: #0099CC;
+            --purple: #9D4EDD;
+            --purple-dark: #7B2CBF;
+            --red: #FF6B6B;
+            --green: #51CF66;
+            --yellow: #FFD43B;
+            --bg-dark: #0a0a0f;
+            --bg-card: #1a1a2e;
+            --bg-card-hover: #2d2d44;
+            --text-primary: #ffffff;
+            --text-secondary: #888;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg-dark);
+            color: var(--text-primary);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Animated Background */
+        .bg-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .bg-animation::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at 20% 80%, rgba(0, 212, 255, 0.1) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 20%, rgba(157, 78, 221, 0.1) 0%, transparent 50%);
+            animation: bgPulse 10s ease-in-out infinite;
+        }
+
+        @keyframes bgPulse {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(-5%, 5%) scale(1.1); }
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            padding: 60px 20px 40px;
+        }
+
+        .logo {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 4rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--cyan) 0%, var(--purple) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 0 0 60px rgba(0, 212, 255, 0.5);
+            animation: logoGlow 3s ease-in-out infinite;
+        }
+
+        @keyframes logoGlow {
+            0%, 100% { filter: drop-shadow(0 0 20px rgba(0, 212, 255, 0.5)); }
+            50% { filter: drop-shadow(0 0 40px rgba(0, 212, 255, 0.8)); }
+        }
+
+        .tagline {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            margin-top: 10px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        /* Navigation Tabs */
+        .nav-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            padding: 20px;
+            flex-wrap: wrap;
+        }
+
+        .nav-tab {
+            padding: 12px 24px;
+            background: var(--bg-card);
+            border: 1px solid transparent;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-tab:hover {
+            background: var(--bg-card-hover);
+            border-color: var(--cyan);
+            transform: translateY(-2px);
+        }
+
+        .nav-tab.active {
+            background: linear-gradient(135deg, var(--cyan-dark), var(--purple-dark));
+            border-color: var(--cyan);
+            box-shadow: 0 0 20px rgba(0, 212, 255, 0.3);
+        }
+
+        .nav-tab .icon {
+            font-size: 1.2rem;
+        }
+
+        /* Main Container */
+        .main-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Phone Mockup */
+        .phone-container {
+            display: flex;
+            justify-content: center;
+            gap: 60px;
+            flex-wrap: wrap;
+            margin: 40px 0;
+        }
+
+        .phone-mockup {
+            width: 320px;
+            height: 650px;
+            background: #111;
+            border-radius: 40px;
+            padding: 12px;
+            box-shadow: 0 0 60px rgba(0, 212, 255, 0.2),
+                        inset 0 0 0 2px rgba(255, 255, 255, 0.1);
+            position: relative;
+        }
+
+        .phone-notch {
+            position: absolute;
+            top: 12px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 120px;
+            height: 28px;
+            background: #000;
+            border-radius: 0 0 16px 16px;
+            z-index: 10;
+        }
+
+        .phone-screen {
+            width: 100%;
+            height: 100%;
+            background: #000;
+            border-radius: 30px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .phone-content {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Status Bar */
+        .status-bar {
+            height: 40px;
+            background: transparent;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .status-left, .status-right {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .status-icons {
+            display: flex;
+            gap: 4px;
+        }
+
+        /* Home Screen */
+        .home-screen {
+            height: calc(100% - 40px);
+            background: linear-gradient(180deg, #0a0a1a 0%, #1a1a2e 100%);
+            padding: 20px;
+            display: none;
+        }
+
+        .home-screen.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .time-display {
+            text-align: center;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .date-display {
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 30px;
+        }
+
+        .app-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .app-icon {
+            aspect-ratio: 1;
+            background: var(--bg-card);
+            border-radius: 15px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .app-icon:hover {
+            transform: scale(1.1);
+            background: var(--bg-card-hover);
+        }
+
+        .app-icon:active {
+            transform: scale(0.95);
+        }
+
+        .app-icon .emoji {
+            font-size: 1.8rem;
+            margin-bottom: 5px;
+        }
+
+        .app-icon .label {
+            font-size: 0.6rem;
+            color: var(--text-secondary);
+        }
+
+        .app-icon.game {
+            background: linear-gradient(135deg, rgba(255, 107, 107, 0.2), rgba(255, 107, 107, 0.1));
+            border: 1px solid rgba(255, 107, 107, 0.3);
+        }
+
+        .app-icon.creator {
+            background: linear-gradient(135deg, rgba(81, 207, 102, 0.2), rgba(81, 207, 102, 0.1));
+            border: 1px solid rgba(81, 207, 102, 0.3);
+        }
+
+        /* Quick Actions Dock */
+        .quick-dock {
+            display: flex;
+            justify-content: space-around;
+            background: rgba(26, 26, 46, 0.8);
+            backdrop-filter: blur(10px);
+            border-radius: 25px;
+            padding: 15px;
+            margin-top: auto;
+        }
+
+        .dock-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+            cursor: pointer;
+            padding: 8px;
+            border-radius: 15px;
+            transition: all 0.2s ease;
+        }
+
+        .dock-item:hover {
+            background: rgba(0, 212, 255, 0.1);
+        }
+
+        .dock-item .icon {
+            font-size: 1.5rem;
+        }
+
+        .dock-item .label {
+            font-size: 0.65rem;
+            color: var(--text-secondary);
+        }
+
+        .dock-item.active .icon {
+            filter: drop-shadow(0 0 10px var(--cyan));
+        }
+
+        /* Game Space Screen */
+        .game-space-screen {
+            height: calc(100% - 40px);
+            background: linear-gradient(180deg, #1a0a1a 0%, #2a1a2e 100%);
+            padding: 20px;
+            display: none;
+        }
+
+        .game-space-screen.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .gs-header {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .gs-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.4rem;
+            color: var(--red);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .gs-subtitle {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            margin-top: 5px;
+        }
+
+        .gs-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-bottom: 25px;
+        }
+
+        .gs-stat {
+            background: rgba(255, 107, 107, 0.1);
+            border: 1px solid rgba(255, 107, 107, 0.3);
+            border-radius: 15px;
+            padding: 15px 10px;
+            text-align: center;
+        }
+
+        .gs-stat .value {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--cyan);
+        }
+
+        .gs-stat .label {
+            font-size: 0.65rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            margin-top: 5px;
+        }
+
+        .gs-toggle-section {
+            background: var(--bg-card);
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 15px;
+        }
+
+        .gs-toggle-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .gs-toggle-row:last-child {
+            margin-bottom: 0;
+        }
+
+        .gs-toggle-label {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .gs-toggle-label .icon {
+            font-size: 1.2rem;
+        }
+
+        .gs-toggle-label .text {
+            font-size: 0.85rem;
+        }
+
+        .gs-toggle {
+            width: 50px;
+            height: 26px;
+            background: #333;
+            border-radius: 13px;
+            position: relative;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .gs-toggle.active {
+            background: var(--red);
+            box-shadow: 0 0 15px rgba(255, 107, 107, 0.5);
+        }
+
+        .gs-toggle::after {
+            content: '';
+            position: absolute;
+            width: 22px;
+            height: 22px;
+            background: white;
+            border-radius: 50%;
+            top: 2px;
+            left: 2px;
+            transition: all 0.3s ease;
+        }
+
+        .gs-toggle.active::after {
+            left: 26px;
+        }
+
+        .gs-fps-display {
+            margin-top: 20px;
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.1), rgba(157, 78, 221, 0.1));
+            border: 1px solid rgba(0, 212, 255, 0.3);
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .fps-counter {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 3rem;
+            font-weight: 900;
+            color: var(--green);
+        }
+
+        .fps-label {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .fps-bar {
+            height: 8px;
+            background: #333;
+            border-radius: 4px;
+            margin-top: 15px;
+            overflow: hidden;
+        }
+
+        .fps-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--green), var(--cyan));
+            border-radius: 4px;
+            transition: width 0.1s ease;
+        }
+
+        /* Creator Screen */
+        .creator-screen {
+            height: calc(100% - 40px);
+            background: linear-gradient(180deg, #0a1a0a 0%, #1a2e1a 100%);
+            padding: 20px;
+            display: none;
+        }
+
+        .creator-screen.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .cr-header {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .cr-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.4rem;
+            color: var(--green);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .cr-section {
+            background: var(--bg-card);
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 15px;
+        }
+
+        .cr-section-title {
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .cr-camera-info {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+        }
+
+        .cr-info-item {
+            background: rgba(81, 207, 102, 0.1);
+            border: 1px solid rgba(81, 207, 102, 0.2);
+            border-radius: 10px;
+            padding: 12px;
+            text-align: center;
+        }
+
+        .cr-info-item .value {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1rem;
+            color: var(--green);
+        }
+
+        .cr-info-item .label {
+            font-size: 0.65rem;
+            color: var(--text-secondary);
+            margin-top: 3px;
+        }
+
+        .cr-recorder {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .cr-rec-btn {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: var(--red);
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 20px rgba(255, 107, 107, 0.5);
+        }
+
+        .cr-rec-btn:hover {
+            transform: scale(1.1);
+        }
+
+        .cr-rec-btn.recording {
+            animation: pulse 1s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { box-shadow: 0 0 20px rgba(255, 107, 107, 0.5); }
+            50% { box-shadow: 0 0 40px rgba(255, 107, 107, 0.8); }
+        }
+
+        .cr-rec-btn .inner {
+            width: 20px;
+            height: 20px;
+            background: white;
+            border-radius: 3px;
+        }
+
+        .cr-rec-btn.recording .inner {
+            border-radius: 50%;
+        }
+
+        .cr-rec-time {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.5rem;
+            color: var(--red);
+        }
+
+        .cr-io-meter {
+            margin-top: 15px;
+        }
+
+        .cr-io-bar {
+            height: 20px;
+            background: #333;
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .cr-io-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--green), var(--cyan));
+            border-radius: 10px;
+            transition: width 0.5s ease;
+        }
+
+        .cr-io-labels {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 5px;
+            font-size: 0.7rem;
+            color: var(--text-secondary);
+        }
+
+        /* Settings Screen */
+        .settings-screen {
+            height: calc(100% - 40px);
+            background: #0a0a0f;
+            padding: 20px;
+            display: none;
+            overflow-y: auto;
+        }
+
+        .settings-screen.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .settings-header {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            color: var(--cyan);
+        }
+
+        .settings-section {
+            margin-bottom: 25px;
+        }
+
+        .settings-section-title {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+            padding-left: 5px;
+        }
+
+        .settings-card {
+            background: var(--bg-card);
+            border-radius: 15px;
+            overflow: hidden;
+        }
+
+        .settings-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            cursor: pointer;
+            transition: background 0.2s ease;
+        }
+
+        .settings-item:hover {
+            background: var(--bg-card-hover);
+        }
+
+        .settings-item:last-child {
+            border-bottom: none;
+        }
+
+        .settings-item-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .settings-item .icon {
+            font-size: 1.2rem;
+            width: 30px;
+            text-align: center;
+        }
+
+        .settings-item .label {
+            font-size: 0.9rem;
+        }
+
+        .settings-item .value {
+            font-size: 0.85rem;
+            color: var(--cyan);
+        }
+
+        .settings-slider {
+            width: 120px;
+            height: 6px;
+            background: #333;
+            border-radius: 3px;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .settings-slider-fill {
+            height: 100%;
+            background: var(--cyan);
+            border-radius: 3px;
+            transition: width 0.2s ease;
+        }
+
+        /* Control Panel (Right Side) */
+        .control-panel {
+            background: var(--bg-card);
+            border-radius: 20px;
+            padding: 25px;
+            min-width: 350px;
+            border: 1px solid rgba(0, 212, 255, 0.2);
+        }
+
+        .panel-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.1rem;
+            color: var(--cyan);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .panel-section {
+            margin-bottom: 25px;
+        }
+
+        .panel-section-title {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 12px;
+            padding-left: 5px;
+        }
+
+        /* RAM Meter */
+        .ram-meter {
+            background: #0a0a0f;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 15px;
+        }
+
+        .ram-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+        }
+
+        .ram-label {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        .ram-value {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.2rem;
+            color: var(--cyan);
+        }
+
+        .ram-bar {
+            height: 12px;
+            background: #1a1a2e;
+            border-radius: 6px;
+            overflow: hidden;
+        }
+
+        .ram-used {
+            height: 100%;
+            background: linear-gradient(90deg, var(--green), var(--cyan));
+            border-radius: 6px;
+            transition: width 0.5s ease;
+        }
+
+        .ram-breakdown {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px;
+            font-size: 0.7rem;
+            color: var(--text-secondary);
+        }
+
+        /* CPU Monitor */
+        .cpu-monitor {
+            background: #0a0a0f;
+            border-radius: 15px;
+            padding: 20px;
+        }
+
+        .cpu-cores {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 8px;
+            margin-bottom: 15px;
+        }
+
+        .cpu-core {
+            text-align: center;
+        }
+
+        .cpu-core-bar {
+            height: 40px;
+            background: #1a1a2e;
+            border-radius: 5px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cpu-core-fill {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            background: linear-gradient(0deg, var(--cyan), var(--purple));
+            transition: height 0.3s ease;
+        }
+
+        .cpu-core-label {
+            font-size: 0.65rem;
+            color: var(--text-secondary);
+            margin-top: 5px;
+        }
+
+        /* Toggle Controls */
+        .toggle-control {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 15px;
+            background: rgba(0, 212, 255, 0.05);
+            border-radius: 10px;
+            margin-bottom: 10px;
+        }
+
+        .toggle-label {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.85rem;
+        }
+
+        .toggle-switch {
+            width: 44px;
+            height: 24px;
+            background: #333;
+            border-radius: 12px;
+            position: relative;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .toggle-switch.active {
+            background: var(--cyan);
+            box-shadow: 0 0 10px rgba(0, 212, 255, 0.5);
+        }
+
+        .toggle-switch::after {
+            content: '';
+            position: absolute;
+            width: 18px;
+            height: 18px;
+            background: white;
+            border-radius: 50%;
+            top: 3px;
+            left: 3px;
+            transition: all 0.3s ease;
+        }
+
+        .toggle-switch.active::after {
+            left: 23px;
+        }
+
+        /* Memory Timeline */
+        .memory-timeline {
+            background: #0a0a0f;
+            border-radius: 15px;
+            padding: 20px;
+            margin-top: 15px;
+        }
+
+        .timeline-title {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            margin-bottom: 15px;
+        }
+
+        .timeline-chart {
+            height: 60px;
+            display: flex;
+            align-items: flex-end;
+            gap: 3px;
+        }
+
+        .timeline-bar {
+            flex: 1;
+            background: var(--cyan);
+            border-radius: 2px;
+            transition: height 0.3s ease;
+            opacity: 0.7;
+        }
+
+        .timeline-bar:hover {
+            opacity: 1;
+        }
+
+        .timeline-bar.highlight {
+            background: var(--red);
+            opacity: 1;
+        }
+
+        /* Info Cards */
+        .info-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 40px 0;
+        }
+
+        .info-card {
+            background: var(--bg-card);
+            border-radius: 20px;
+            padding: 25px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.3s ease;
+        }
+
+        .info-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--cyan);
+            box-shadow: 0 10px 40px rgba(0, 212, 255, 0.1);
+        }
+
+        .info-card-icon {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+        }
+
+        .info-card-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+        }
+
+        .info-card-desc {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        .info-card-metric {
+            display: flex;
+            align-items: baseline;
+            gap: 8px;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .info-card-metric .value {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.8rem;
+            color: var(--cyan);
+        }
+
+        .info-card-metric .unit {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 40px 20px;
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+        }
+
+        .footer a {
+            color: var(--cyan);
+            text-decoration: none;
+        }
+
+        /* Responsive */
+        @media (max-width: 900px) {
+            .phone-container {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .control-panel {
+                width: 100%;
+                max-width: 400px;
+            }
+            
+            .logo {
+                font-size: 2.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-animation"></div>
+
+    <header class="header">
+        <h1 class="logo">NOVA OS</h1>
+        <p class="tagline">Ultra-Lightweight Android for Gamers & Creators</p>
+    </header>
+
+    <nav class="nav-tabs">
+        <div class="nav-tab active" data-screen="home">
+            <span class="icon">🏠</span>
+            <span>Home</span>
+        </div>
+        <div class="nav-tab" data-screen="game">
+            <span class="icon">🎮</span>
+            <span>Game Space</span>
+        </div>
+        <div class="nav-tab" data-screen="creator">
+            <span class="icon">🎬</span>
+            <span>Creator</span>
+        </div>
+        <div class="nav-tab" data-screen="settings">
+            <span class="icon">⚙️</span>
+            <span>Settings</span>
+        </div>
+    </nav>
+
+    <main class="main-container">
+        <div class="phone-container">
+            <div class="phone-mockup">
+                <div class="phone-notch"></div>
+                <div class="phone-screen">
+                    <div class="phone-content">
+                        <div class="status-bar">
+                            <div class="status-left">
+                                <span id="statusTime">12:00</span>
+                            </div>
+                            <div class="status-right">
+                                <div class="status-icons">
+                                    <span>📶</span>
+                                    <span>🔋</span>
+                                    <span id="batteryLevel">85%</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Home Screen -->
+                        <div class="home-screen active" id="homeScreen">
+                            <div class="time-display" id="clockTime">12:00</div>
+                            <div class="date-display" id="clockDate">Monday, January 1</div>
+
+                            <div class="app-grid">
+                                <div class="app-icon game" onclick="switchTab('game')">
+                                    <span class="emoji">🎮</span>
+                                    <span class="label">Game</span>
+                                </div>
+                                <div class="app-icon" onclick="switchTab('creator')">
+                                    <span class="emoji">🎬</span>
+                                    <span class="label">Record</span>
+                                </div>
+                                <div class="app-icon">
+                                    <span class="emoji">📷</span>
+                                    <span class="label">Camera</span>
+                                </div>
+                                <div class="app-icon">
+                                    <span class="emoji">🌐</span>
+                                    <span class="label">Chrome</span>
+                                </div>
+                                <div class="app-icon">
+                                    <span class="emoji">💬</span>
+                                    <span class="label">Chat</span>
+                                </div>
+                                <div class="app-icon">
+                                    <span class="emoji">🎵</span>
+                                    <span class="label">Music</span>
+                                </div>
+                                <div class="app-icon">
+                                    <span class="emoji">📁</span>
+                                    <span class="label">Files</span>
+                                </div>
+                                <div class="app-icon">
+                                    <span class="emoji">⚙️</span>
+                                    <span class="label">Settings</span>
+                                </div>
+                            </div>
+
+                            <div class="quick-dock">
+                                <div class="dock-item" onclick="switchTab('home')">
+                                    <span class="icon">🏠</span>
+                                    <span class="label">Home</span>
+                                </div>
+                                <div class="dock-item" onclick="switchTab('game')">
+                                    <span class="icon">⚡</span>
+                                    <span class="label">Game</span>
+                                </div>
+                                <div class="dock-item" onclick="switchTab('creator')">
+                                    <span class="icon">🎬</span>
+                                    <span class="label">Record</span>
+                                </div>
+                                <div class="dock-item" onclick="switchTab('settings')">
+                                    <span class="icon">⚙️</span>
+                                    <span class="label">Settings</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Game Space Screen -->
+                        <div class="game-space-screen" id="gameScreen">
+                            <div class="gs-header">
+                                <div class="gs-title">⚡ Game Space</div>
+                                <div class="gs-subtitle">Performance Optimized</div>
+                            </div>
+
+                            <div class="gs-stats">
+                                <div class="gs-stat">
+                                    <div class="value" id="fpsValue">60</div>
+                                    <div class="label">FPS</div>
+                                </div>
+                                <div class="gs-stat">
+                                    <div class="value" id="tempValue">38°</div>
+                                    <div class="label">Temp °C</div>
+                                </div>
+                                <div class="gs-stat">
+                                    <div class="value" id="memGameValue">2.1</div>
+                                    <div class="label">RAM GB</div>
+                                </div>
+                            </div>
+
+                            <div class="gs-toggle-section">
+                                <div class="gs-toggle-row">
+                                    <div class="gs-toggle-label">
+                                        <span class="icon">🚀</span>
+                                        <span class="text">Performance Mode</span>
+                                    </div>
+                                    <div class="gs-toggle active" id="perfToggle" onclick="togglePerf()"></div>
+                                </div>
+                                <div class="gs-toggle-row">
+                                    <div class="gs-toggle-label">
+                                        <span class="icon">🔕</span>
+                                        <span class="text">Block Notifications</span>
+                                    </div>
+                                    <div class="gs-toggle active" id="notifToggle" onclick="toggleNotif()"></div>
+                                </div>
+                                <div class="gs-toggle-row">
+                                    <div class="gs-toggle-label">
+                                        <span class="icon">🖐️</span>
+                                        <span class="text">Touch Boost (1kHz)</span>
+                                    </div>
+                                    <div class="gs-toggle active" id="touchToggle" onclick="toggleTouch()"></div>
+                                </div>
+                                <div class="gs-toggle-row">
+                                    <div class="gs-toggle-label">
+                                        <span class="icon">🔄</span>
+                                        <span class="text">Background Sync</span>
+                                    </div>
+                                    <div class="gs-toggle" id="syncToggle" onclick="toggleSync()"></div>
+                                </div>
+                            </div>
+
+                            <div class="gs-fps-display">
+                                <div class="fps-counter" id="fpsCounter">60</div>
+                                <div class="fps-label">Frames Per Second</div>
+                                <div class="fps-bar">
+                                    <div class="fps-fill" id="fpsBar" style="width: 100%"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Creator Screen -->
+                        <div class="creator-screen" id="creatorScreen">
+                            <div class="cr-header">
+                                <div class="cr-title">🎬 Creator Studio</div>
+                            </div>
+
+                            <div class="cr-section">
+                                <div class="cr-section-title">📷 Camera2 API</div>
+                                <div class="cr-camera-info">
+                                    <div class="cr-info-item">
+                                        <div class="value">Level 3</div>
+                                        <div class="label">API Level</div>
+                                    </div>
+                                    <div class="cr-info-item">
+                                        <div class="value">60fps</div>
+                                        <div class="label">Max Capture</div>
+                                    </div>
+                                    <div class="cr-info-item">
+                                        <div class="value">4K</div>
+                                        <div class="label">Video</div>
+                                    </div>
+                                    <div class="cr-info-item">
+                                        <div class="value">RAW</div>
+                                        <div class="label">Format</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="cr-section">
+                                <div class="cr-section-title">🎥 Screen Recorder</div>
+                                <div class="cr-recorder">
+                                    <div class="cr-rec-info">
+                                        <div style="font-size: 0.85rem; margin-bottom: 5px;">Internal Audio</div>
+                                        <div style="font-size: 0.75rem; color: var(--text-secondary);">320 kbps • 48kHz</div>
+                                    </div>
+                                    <button class="cr-rec-btn" id="recBtn" onclick="toggleRecord()">
+                                        <div class="inner"></div>
+                                    </button>
+                                    <div class="cr-rec-time" id="recTime">00:00</div>
+                                </div>
+                                <div class="cr-io-meter">
+                                    <div class="cr-io-bar">
+                                        <div class="cr-io-fill" id="ioFill" style="width: 0%"></div>
+                                    </div>
+                                    <div class="cr-io-labels">
+                                        <span>Write: <span id="writeSpeed">0</span> MB/s</span>
+                                        <span>Read: <span id="readSpeed">0</span> MB/s</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="cr-section">
+                                <div class="cr-section-title">💾 Storage I/O</div>
+                                <div style="display: flex; justify-content: space-between; align-items: center;">
+                                    <span style="font-size: 0.85rem;">I/O Scheduler</span>
+                                    <span style="font-family: 'Orbitron'; color: var(--cyan);">mq-deadline</span>
+                                </div>
+                                <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 10px;">
+                                    <span style="font-size: 0.85rem;">Sequential Read</span>
+                                    <span style="font-family: 'Orbitron'; color: var(--green);">347 MB/s</span>
+                                </div>
+                                <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 10px;">
+                                    <span style="font-size: 0.85rem;">Sequential Write</span>
+                                    <span style="font-family: 'Orbitron'; color: var(--green);">289 MB/s</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Settings Screen -->
+                        <div class="settings-screen" id="settingsScreen">
+                            <div class="settings-header">⚙️ NOVA Control Center</div>
+
+                            <div class="settings-section">
+                                <div class="settings-section-title">Performance</div>
+                                <div class="settings-card">
+                                    <div class="settings-item">
+                                        <div class="settings-item-left">
+                                            <span class="icon">⚡</span>
+                                            <span class="label">CPU Governor</span>
+                                        </div>
+                                        <span class="value">Schedutil</span>
+                                    </div>
+                                    <div class="settings-item">
+                                        <div class="settings-item-left">
+                                            <span class="icon">🎨</span>
+                                            <span class="label">GPU Perf</span>
+                                        </div>
+                                        <span class="value">Max</span>
+                                    </div>
+                                    <div class="settings-item">
+                                        <div class="settings-item-left">
+                                            <span class="icon">🖐️</span>
+                                            <span class="label">Touch Rate</span>
+                                        </div>
+                                        <span class="value">1000 Hz</span>
+                                    </div>
+                                    <div class="settings-item">
+                                        <div class="settings-item-left">
+                                            <span class="icon">🔲</span>
+                                            <span class="label">Refresh Rate</span>
+                                        </div>
+                                        <span class="value">120 Hz</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="settings-section">
+                                <div class="settings-section-title">Memory</div>
+                                <div class="settings-card">
+                                    <div class="settings-item">
+                                        <div class="settings-item-left">
+                                            <span class="icon">💾</span>
+                                            <span class="label">ZRAM Size</span>
+                                        </div>
+                                        <span class="value">4 GB</span>
+                                    </div>
+                                    <div class="settings-item">
+                                        <div class="settings-item-left">
+                                            <span class="icon">🔀</span>
+                                            <span class="label">Swappiness</span>
+                                        </div>
+                                        <span class="value">180</span>
+                                    </div>
+                                    <div class="settings-item">
+                                        <div class="settings-item-left">
+                                            <span class="icon">🧠</span>
+                                            <span class="label">LMKD Target</span>
+                                        </div>
+                                        <span class="value">8192 KB</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="settings-section">
+                                <div class="settings-section-title">Gaming</div>
+                                <div class="settings-card">
+                                    <div class="settings-item">
+                                        <div class="settings-item-left">
+                                            <span class="icon">🎮</span>
+                                            <span class="label">Game Space</span>
+                                        </div>
+                                        <div class="toggle-switch active" onclick="this.classList.toggle('active')"></div>
+                                    </div>
+                                    <div class="settings-item">
+                                        <div class="settings-item-left">
+                                            <span class="icon">🌡️</span>
+                                            <span class="label">Thermal Limit</span>
+                                        </div>
+                                        <span class="value">45°C</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Control Panel -->
+            <div class="control-panel">
+                <div class="panel-title">
+                    <span>📊</span> Live Control Panel
+                </div>
+
+                <div class="panel-section">
+                    <div class="panel-section-title">Memory Usage</div>
+                    <div class="ram-meter">
+                        <div class="ram-header">
+                            <span class="ram-label">RAM Usage</span>
+                            <span class="ram-value"><span id="ramValue">1.8</span> / 8 GB</span>
+                        </div>
+                        <div class="ram-bar">
+                            <div class="ram-used" id="ramBar" style="width: 22.5%"></div>
+                        </div>
+                        <div class="ram-breakdown">
+                            <span>System: <span id="sysRam">0.8</span> GB</span>
+                            <span>Apps: <span id="appRam">1.0</span> GB</span>
+                        </div>
+                    </div>
+
+                    <div class="memory-timeline">
+                        <div class="timeline-title">Memory Usage (Last 60 seconds)</div>
+                        <div class="timeline-chart" id="memChart">
+                            <!-- Generated by JS -->
+                        </div>
+                    </div>
+                </div>
+
+                <div class="panel-section">
+                    <div class="panel-section-title">CPU Cores</div>
+                    <div class="cpu-monitor">
+                        <div class="cpu-cores">
+                            <div class="cpu-core">
+                                <div class="cpu-core-bar">
+                                    <div class="cpu-core-fill" id="cpu0" style="height: 45%"></div>
+                                </div>
+                                <div class="cpu-core-label">Core 0</div>
+                            </div>
+                            <div class="cpu-core-bar">
+                                <div class="cpu-core-fill" id="cpu1" style="height: 38%"></div>
+                                </div>
+                                <div class="cpu-core-label">Core 1</div>
+                            </div>
+                            <div class="cpu-core-bar">
+                                <div class="cpu-core-fill" id="cpu2" style="height: 52%"></div>
+                                </div>
+                                <div class="cpu-core-label">Core 2</div>
+                            </div>
+                            <div class="cpu-core-bar">
+                                <div class="cpu-core-fill" id="cpu3" style="height: 41%"></div>
+                                </div>
+                                <div class="cpu-core-label">Core 3</div>
+                            </div>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; font-size: 0.7rem; color: var(--text-secondary);">
+                            <span>Temp: <span id="cpuTemp">42°C</span></span>
+                            <span>Governor: <span id="cpuGov">schedutil</span></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="panel-section">
+                    <div class="panel-section-title">Active Optimizations</div>
+                    <div class="toggle-control">
+                        <div class="toggle-label">
+                            <span>🎮</span>
+                            <span>Game Mode</span>
+                        </div>
+                        <div class="toggle-switch active" id="gameModeToggle" onclick="toggleGameMode()"></div>
+                    </div>
+                    <div class="toggle-control">
+                        <div class="toggle-label">
+                            <span>💾</span>
+                            <span>ZRAM Active</span>
+                        </div>
+                        <div class="toggle-switch active"></div>
+                    </div>
+                    <div class="toggle-control">
+                        <div class="toggle-label">
+                            <span>🖐️</span>
+                            <span>Touch Boost</span>
+                        </div>
+                        <div class="toggle-switch active"></div>
+                    </div>
+                    <div class="toggle-control">
+                        <div class="toggle-label">
+                            <span>🌡️</span>
+                            <span>Thermal Ctrl</span>
+                        </div>
+                        <div class="toggle-switch active"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Info Cards -->
+        <div class="info-cards">
+            <div class="info-card">
+                <div class="info-card-icon">💾</div>
+                <div class="info-card-title">ZRAM Optimization</div>
+                <div class="info-card-desc">Advanced memory compression using LZ4HC algorithm with 2:1 compression ratio. Background apps are efficiently swapped to compressed memory.</div>
+                <div class="info-card-metric">
+                    <span class="value">2:1</span>
+                    <span class="unit">compression ratio</span>
+                </div>
+            </div>
+
+            <div class="info-card">
+                <div class="info-card-icon">🖐️</div>
+                <div class="info-card-title">1000Hz Touch</div>
+                <div class="info-card-desc">Kernel-level touch driver optimization for ultra-responsive input. Perfect for competitive gaming with minimal input lag.</div>
+                <div class="info-card-metric">
+                    <span class="value">&lt;20</span>
+                    <span class="unit">ms latency</span>
+                </div>
+            </div>
+
+            <div class="info-card">
+                <div class="info-card-icon">📷</div>
+                <div class="info-card-title">Camera2 Level 3</div>
+                <div class="info-card-desc">Full Camera2 API implementation for maximum compatibility with GCam and professional camera applications.</div>
+                <div class="info-card-metric">
+                    <span class="value">100%</span>
+                    <span class="unit">API coverage</span>
+                </div>
+            </div>
+
+            <div class="info-card">
+                <div class="info-card-icon">🌡️</div>
+                <div class="info-card-title">Smart Thermal</div>
+                <div class="info-card-desc">Intelligent thermal throttling that maintains stable 60fps by dynamically adjusting CPU/GPU performance based on temperature.</div>
+                <div class="info-card-metric">
+                    <span class="value">60</span>
+                    <span class="unit">FPS locked</span>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <p>NOVA OS Demo • Built with ❤️ for Gamers & Creators</p>
+        <p style="margin-top: 10px;">
+            <a href="NOVA_OS_BLUEPRINT.md">Documentation</a> • 
+            <a href="NOVA_OS_QUICK_REFERENCE.md">Quick Reference</a> • 
+            <a href="https://github.com/antono4/-Lightweight-Android-OS-for-Gamers">GitHub</a>
+        </p>
+    </footer>
+
+    <script>
+        // Clock
+        function updateClock() {
+            const now = new Date();
+            const hours = now.getHours().toString().padStart(2, '0');
+            const minutes = now.getMinutes().toString().padStart(2, '0');
+            const time = `${hours}:${minutes}`;
+            
+            document.getElementById('clockTime').textContent = time;
+            document.getElementById('statusTime').textContent = time;
+            
+            const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+            const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+            const dateStr = `${days[now.getDay()]}, ${months[now.getMonth()]} ${now.getDate()}`;
+            document.getElementById('clockDate').textContent = dateStr;
+        }
+        updateClock();
+        setInterval(updateClock, 1000);
+
+        // Screen Navigation
+        function switchTab(screen) {
+            // Update nav tabs
+            document.querySelectorAll('.nav-tab').forEach(tab => {
+                tab.classList.toggle('active', tab.dataset.screen === screen);
+            });
+
+            // Update screens
+            document.getElementById('homeScreen').classList.remove('active');
+            document.getElementById('gameScreen').classList.remove('active');
+            document.getElementById('creatorScreen').classList.remove('active');
+            document.getElementById('settingsScreen').classList.remove('active');
+
+            document.getElementById(screen + 'Screen').classList.add('active');
+
+            // Update dock
+            document.querySelectorAll('.dock-item').forEach(item => item.classList.remove('active'));
+        }
+
+        // Tab click handlers
+        document.querySelectorAll('.nav-tab').forEach(tab => {
+            tab.addEventListener('click', () => switchTab(tab.dataset.screen));
+        });
+
+        // Game Space Toggles
+        function togglePerf() {
+            document.getElementById('perfToggle').classList.toggle('active');
+            updateGameStats();
+        }
+
+        function toggleNotif() {
+            document.getElementById('notifToggle').classList.toggle('active');
+        }
+
+        function toggleTouch() {
+            document.getElementById('touchToggle').classList.toggle('active');
+        }
+
+        function toggleSync() {
+            document.getElementById('syncToggle').classList.toggle('active');
+        }
+
+        // FPS Simulation
+        let fpsInterval;
+        function updateGameStats() {
+            const fps = 55 + Math.random() * 10;
+            const temp = 36 + Math.random() * 8;
+            const mem = 1.8 + Math.random() * 0.8;
+
+            document.getElementById('fpsValue').textContent = Math.round(fps);
+            document.getElementById('fpsCounter').textContent = Math.round(fps);
+            document.getElementById('fpsBar').style.width = (fps / 60 * 100) + '%';
+            document.getElementById('tempValue').textContent = Math.round(temp) + '°';
+            document.getElementById('memGameValue').textContent = mem.toFixed(1);
+        }
+
+        // Start FPS simulation when on game screen
+        const observer = new MutationObserver((mutations) => {
+            mutations.forEach((mutation) => {
+                if (mutation.target.id === 'gameScreen' && mutation.target.classList.contains('active')) {
+                    if (!fpsInterval) {
+                        fpsInterval = setInterval(updateGameStats, 200);
+                    }
+                }
+            });
+        });
+
+        // Recording
+        let isRecording = false;
+        let recSeconds = 0;
+        let recInterval;
+
+        function toggleRecord() {
+            isRecording = !isRecording;
+            document.getElementById('recBtn').classList.toggle('recording', isRecording);
+
+            if (isRecording) {
+                recSeconds = 0;
+                recInterval = setInterval(() => {
+                    recSeconds++;
+                    const mins = Math.floor(recSeconds / 60).toString().padStart(2, '0');
+                    const secs = (recSeconds % 60).toString().padStart(2, '0');
+                    document.getElementById('recTime').textContent = `${mins}:${secs}`;
+                }, 1000);
+            } else {
+                clearInterval(recInterval);
+            }
+        }
+
+        // I/O Speed Simulation
+        function updateIO() {
+            const writeSpeed = 250 + Math.random() * 80;
+            const readSpeed = 300 + Math.random() * 100;
+            document.getElementById('writeSpeed').textContent = Math.round(writeSpeed);
+            document.getElementById('readSpeed').textContent = Math.round(readSpeed);
+            document.getElementById('ioFill').style.width = (readSpeed / 500 * 100) + '%';
+        }
+
+        // Memory Timeline Chart
+        const memChart = document.getElementById('memChart');
+        const memData = [];
+        for (let i = 0; i < 60; i++) {
+            memData.push(18 + Math.random() * 10);
+        }
+
+        memData.forEach(val => {
+            const bar = document.createElement('div');
+            bar.className = 'timeline-bar';
+            bar.style.height = val + '%';
+            memChart.appendChild(bar);
+        });
+
+        // Update memory timeline
+        setInterval(() => {
+            memData.shift();
+            memData.push(18 + Math.random() * 10);
+            
+            const bars = memChart.querySelectorAll('.timeline-bar');
+            bars.forEach((bar, i) => {
+                bar.style.height = memData[i] + '%';
+                bar.classList.toggle('highlight', i > 50);
+            });
+
+            // Update RAM display
+            const ramUsage = 1.6 + Math.random() * 0.6;
+            document.getElementById('ramValue').textContent = ramUsage.toFixed(1);
+            document.getElementById('ramBar').style.width = (ramUsage / 8 * 100) + '%';
+            document.getElementById('sysRam').textContent = (ramUsage * 0.4).toFixed(1);
+            document.getElementById('appRam').textContent = (ramUsage * 0.6).toFixed(1);
+        }, 1000);
+
+        // CPU Core Simulation
+        setInterval(() => {
+            for (let i = 0; i < 4; i++) {
+                const usage = 30 + Math.random() * 50;
+                document.getElementById('cpu' + i).style.height = usage + '%';
+            }
+            document.getElementById('cpuTemp').textContent = (40 + Math.random() * 10).toFixed(0) + '°C';
+        }, 500);
+
+        // Game Mode Toggle
+        function toggleGameMode() {
+            const toggle = document.getElementById('gameModeToggle');
+            toggle.classList.toggle('active');
+            
+            if (toggle.classList.contains('active')) {
+                document.getElementById('ramValue').textContent = '2.1';
+                document.getElementById('ramBar').style.width = '26%';
+            } else {
+                document.getElementById('ramValue').textContent = '1.8';
+                document.getElementById('ramBar').style.width = '22.5%';
+            }
+        }
+
+        // I/O update interval
+        setInterval(updateIO, 1000);
+
+        // Initial I/O
+        updateIO();
+    </script>
+</body>
+</html>
