@@ -1,7 +1,7 @@
 # NOVA OS
 ### Ultra-Lightweight Android Custom ROM for Gamers & Content Creators
 
-![NOVA OS Banner](https://img.shields.io/badge/NOVA-OS-v1.0-00D4FF?style=for-the-badge&logo=android&logoColor=white)
+![NOVA OS Banner](assets/banner.svg)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue?style=for-the-badge)](LICENSE)
 [![Android](https://img.shields.io/badge/Android-14-34A853?style=for-the-badge&logo=android&logoColor=white)](https://source.android.com/)
 [![LineageOS](https://img.shields.io/badge/Base-LineageOS%2021-1C1C1C?style=for-the-badge)](https://lineageos.org/)
@@ -27,6 +27,8 @@ Built on **LineageOS 21.0 (Android 14)**, NOVA OS strips away bloatware, optimiz
 ---
 
 ## ✨ Features
+
+![NOVA OS Features](assets/features.svg)
 
 ### 🎮 Gaming Features
 
@@ -76,6 +78,8 @@ NOVA_OS/
 ---
 
 ## 🏗️ Architecture Overview
+
+![NOVA OS Architecture](assets/architecture.svg)
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
@@ -202,6 +206,8 @@ adb sideload out/target/product/<device>/NOVA_*.zip
 ---
 
 ## 📊 Performance Benchmarks
+
+![NOVA OS Benchmark Comparison](assets/benchmark.svg)
 
 *Target metrics (to be validated after implementation)*
 

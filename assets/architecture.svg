@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#0a0a0f"/>
+      <stop offset="100%" style="stop-color:#1a1a2e"/>
+    </linearGradient>
+    <linearGradient id="cyanGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#00D4FF"/>
+      <stop offset="100%" style="stop-color:#0099CC"/>
+    </linearGradient>
+    <linearGradient id="purpleGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#9D4EDD"/>
+      <stop offset="100%" style="stop-color:#7B2CBF"/>
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="800" height="600" fill="url(#bgGrad)"/>
+  
+  <!-- Title -->
+  <text x="400" y="40" font-family="Arial, sans-serif" font-size="28" font-weight="bold" fill="#00D4FF" text-anchor="middle" filter="url(#glow)">NOVA OS Architecture</text>
+  
+  <!-- Layer 1: User Experience -->
+  <rect x="50" y="70" width="700" height="80" rx="10" fill="#1e1e2e" stroke="#00D4FF" stroke-width="2"/>
+  <text x="100" y="85" font-family="Arial" font-size="12" fill="#00D4FF">USER EXPERIENCE</text>
+  <rect x="80" y="95" width="130" height="40" rx="5" fill="#2d2d44"/>
+  <text x="145" y="120" font-family="Arial" font-size="11" fill="#fff" text-anchor="middle">Nova Launcher</text>
+  <rect x="230" y="95" width="130" height="40" rx="5" fill="#2d2d44"/>
+  <text x="295" y="120" font-family="Arial" font-size="11" fill="#fff" text-anchor="middle">Game Space</text>
+  <rect x="380" y="95" width="130" height="40" rx="5" fill="#2d2d44"/>
+  <text x="445" y="120" font-family="Arial" font-size="11" fill="#fff" text-anchor="middle">Creator Studio</text>
+  <rect x="530" y="95" width="130" height="40" rx="5" fill="#2d2d44"/>
+  <text x="595" y="120" font-family="Arial" font-size="11" fill="#fff" text-anchor="middle">Control Center</text>
+  <rect x="680" y="95" width="50" height="40" rx="5" fill="#2d2d44"/>
+  <text x="705" y="120" font-family="Arial" font-size="11" fill="#fff" text-anchor="middle">...</text>
+  
+  <!-- Arrow 1 -->
+  <path d="M400 155 L400 175" stroke="#00D4FF" stroke-width="2" marker-end="url(#arrowhead)"/>
+  
+  <!-- Layer 2: Framework -->
+  <rect x="50" y="180" width="700" height="100" rx="10" fill="#1e1e2e" stroke="#9D4EDD" stroke-width="2"/>
+  <text x="100" y="195" font-family="Arial" font-size="12" fill="#9D4EDD">FRAMEWORK LAYER</text>
+  <rect x="80" y="205" width="150" height="60" rx="5" fill="#2d2d44"/>
+  <text x="155" y="225" font-family="Arial" font-size="10" fill="#fff" text-anchor="middle">Activity Manager</text>
+  <text x="155" y="242" font-family="Arial" font-size="10" fill="#888">Resource Allocator</text>
+  <rect x="250" y="205" width="150" height="60" rx="5" fill="#2d2d44"/>
+  <text x="325" y="225" font-family="Arial" font-size="10" fill="#fff" text-anchor="middle">Memory Manager</text>
+  <text x="325" y="242" font-family="Arial" font-size="10" fill="#888">ZRAM + LMKD</text>
+  <rect x="420" y="205" width="150" height="60" rx="5" fill="#2d2d44"/>
+  <text x="495" y="225" font-family="Arial" font-size="10" fill="#fff" text-anchor="middle">Thermal Service</text>
+  <text x="495" y="242" font-family="Arial" font-size="10" fill="#888">FPS Stabilization</text>
+  <rect x="590" y="205" width="150" height="60" rx="5" fill="#2d2d44"/>
+  <text x="665" y="225" font-family="Arial" font-size="10" fill="#fff" text-anchor="middle">Touch Optimizer</text>
+  <text x="665" y="242" font-family="Arial" font-size="10" fill="#888">1000Hz Sampling</text>
+  
+  <!-- Arrow 2 -->
+  <path d="M400 285 L400 305" stroke="#9D4EDD" stroke-width="2"/>
+  
+  <!-- Layer 3: Runtime -->
+  <rect x="50" y="310" width="700" height="80" rx="10" fill="#1e1e2e" stroke="#FF6B6B" stroke-width="2"/>
+  <text x="100" y="325" font-family="Arial" font-size="12" fill="#FF6B6B">ANDROID RUNTIME</text>
+  <rect x="120" y="335" width="140" height="40" rx="5" fill="#2d2d44"/>
+  <text x="190" y="360" font-family="Arial" font-size="11" fill="#fff" text-anchor="middle">ART Optimized</text>
+  <rect x="280" y="335" width="140" height="40" rx="5" fill="#2d2d44"/>
+  <text x="350" y="360" font-family="Arial" font-size="11" fill="#fff" text-anchor="middle">Bionic Libs</text>
+  <rect x="440" y="335" width="140" height="40" rx="5" fill="#2d2d44"/>
+  <text x="510" y="360" font-family="Arial" font-size="11" fill="#fff" text-anchor="middle">Power Manager</text>
+  <rect x="600" y="335" width="140" height="40" rx="5" fill="#2d2d44"/>
+  <text x="670" y="360" font-family="Arial" font-size="11" fill="#fff" text-anchor="middle">Media Codecs</text>
+  
+  <!-- Arrow 3 -->
+  <path d="M400 395 L400 415" stroke="#FF6B6B" stroke-width="2"/>
+  
+  <!-- Layer 4: HAL -->
+  <rect x="50" y="420" width="700" height="80" rx="10" fill="#1e1e2e" stroke="#51CF66" stroke-width="2"/>
+  <text x="100" y="435" font-family="Arial" font-size="12" fill="#51CF66">HARDWARE ABSTRACTION</text>
+  <rect x="80" y="445" width="150" height="40" rx="5" fill="#2d2d44"/>
+  <text x="155" y="470" font-family="Arial" font-size="11" fill="#fff" text-anchor="middle">GPU Tuned</text>
+  <rect x="250" y="445" width="150" height="40" rx="5" fill="#2d2d44"/>
+  <text x="325" y="470" font-family="Arial" font-size="11" fill="#fff" text-anchor="middle">Audio Low-Latency</text>
+  <rect x="420" y="445" width="150" height="40" rx="5" fill="#2d2d44"/>
+  <text x="495" y="470" font-family="Arial" font-size="11" fill="#fff" text-anchor="middle">Camera2 API L3</text>
+  <rect x="590" y="445" width="150" height="40" rx="5" fill="#2d2d44"/>
+  <text x="665" y="470" font-family="Arial" font-size="11" fill="#fff" text-anchor="middle">I/O Scheduler</text>
+  
+  <!-- Arrow 4 -->
+  <path d="M400 505 L400 525" stroke="#51CF66" stroke-width="2"/>
+  
+  <!-- Layer 5: Kernel -->
+  <rect x="50" y="530" width="700" height="55" rx="10" fill="#1e1e2e" stroke="#FFD43B" stroke-width="2"/>
+  <text x="100" y="545" font-family="Arial" font-size="12" fill="#FFD43B">LINUX KERNEL</text>
+  <rect x="180" y="545" width="100" height="25" rx="3" fill="#3d3d5c"/>
+  <text x="230" y="562" font-family="Arial" font-size="9" fill="#fff" text-anchor="middle">ZRAM</text>
+  <rect x="290" y="545" width="100" height="25" rx="3" fill="#3d3d5c"/>
+  <text x="340" y="562" font-family="Arial" font-size="9" fill="#fff" text-anchor="middle">LMKD</text>
+  <rect x="400" y="545" width="100" height="25" rx="3" fill="#3d3d5c"/>
+  <text x="450" y="562" font-family="Arial" font-size="9" fill="#fff" text-anchor="middle">Touch 1kHz</text>
+  <rect x="510" y="545" width="100" height="25" rx="3" fill="#3d3d5c"/>
+  <text x="560" y="562" font-family="Arial" font-size="9" fill="#fff" text-anchor="middle">Thermal Gov</text>
+  <rect x="620" y="545" width="100" height="25" rx="3" fill="#3d3d5c"/>
+  <text x="670" y="562" font-family="Arial" font-size="9" fill="#fff" text-anchor="middle">Schedutil</text>
+</svg>

@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 400">
+  <defs>
+    <linearGradient id="bgGrad3" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#0a0a0f"/>
+      <stop offset="100%" style="stop-color:#1a1a2e"/>
+    </linearGradient>
+    <linearGradient id="stockGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#666"/>
+      <stop offset="100%" style="stop-color:#444"/>
+    </linearGradient>
+    <linearGradient id="novaGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#00D4FF"/>
+      <stop offset="100%" style="stop-color:#0099CC"/>
+    </linearGradient>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="800" height="400" fill="url(#bgGrad3)"/>
+  
+  <!-- Title -->
+  <text x="400" y="35" font-family="Arial, sans-serif" font-size="24" font-weight="bold" fill="#00D4FF" text-anchor="middle">NOVA OS vs Stock ROM</text>
+  
+  <!-- Legend -->
+  <rect x="550" y="55" width="15" height="15" rx="3" fill="url(#stockGrad)"/>
+  <text x="570" y="67" font-family="Arial" font-size="12" fill="#888">Stock ROM</text>
+  <rect x="650" y="55" width="15" height="15" rx="3" fill="url(#novaGrad)"/>
+  <text x="670" y="67" font-family="Arial" font-size="12" fill="#00D4FF">NOVA OS</text>
+  
+  <!-- RAM Usage Chart -->
+  <text x="120" y="100" font-family="Arial" font-size="14" font-weight="bold" fill="#fff" text-anchor="middle">RAM Usage</text>
+  <text x="120" y="115" font-family="Arial" font-size="10" fill="#888" text-anchor="middle">(idle, GB)</text>
+  <!-- Stock bar -->
+  <rect x="50" y="125" width="70" height="30" rx="5" fill="url(#stockGrad)"/>
+  <text x="85" y="145" font-family="Arial" font-size="10" fill="#fff" text-anchor="middle">3.5</text>
+  <!-- NOVA bar -->
+  <rect x="50" y="160" width="36" height="30" rx="5" fill="url(#novaGrad)"/>
+  <text x="68" y="180" font-family="Arial" font-size="10" fill="#fff" text-anchor="middle">1.8</text>
+  <text x="85" y="205" font-family="Arial" font-size="10" fill="#51CF66" text-anchor="middle">-49%</text>
+  
+  <!-- Storage Chart -->
+  <text x="260" y="100" font-family="Arial" font-size="14" font-weight="bold" fill="#fff" text-anchor="middle">Storage</text>
+  <text x="260" y="115" font-family="Arial" font-size="10" fill="#888" text-anchor="middle">(size, GB)</text>
+  <!-- Stock bar -->
+  <rect x="190" y="125" width="70" height="30" rx="5" fill="url(#stockGrad)"/>
+  <text x="225" y="145" font-family="Arial" font-size="10" fill="#fff" text-anchor="middle">3.5</text>
+  <!-- NOVA bar -->
+  <rect x="190" y="160" width="16" height="30" rx="5" fill="url(#novaGrad)"/>
+  <text x="198" y="180" font-family="Arial" font-size="10" fill="#fff" text-anchor="middle">0.8</text>
+  <text x="225" y="205" font-family="Arial" font-size="10" fill="#51CF66" text-anchor="middle">-77%</text>
+  
+  <!-- Touch Latency Chart -->
+  <text x="420" y="100" font-family="Arial" font-size="14" font-weight="bold" fill="#fff" text-anchor="middle">Touch Latency</text>
+  <text x="420" y="115" font-family="Arial" font-size="10" fill="#888" text-anchor="middle">(ms)</text>
+  <!-- Stock bar -->
+  <rect x="350" y="125" width="70" height="30" rx="5" fill="url(#stockGrad)"/>
+  <text x="385" y="145" font-family="Arial" font-size="10" fill="#fff" text-anchor="middle">40</text>
+  <!-- NOVA bar -->
+  <rect x="350" y="160" width="35" height="30" rx="5" fill="url(#novaGrad)"/>
+  <text x="367" y="180" font-family="Arial" font-size="10" fill="#fff" text-anchor="middle">20</text>
+  <text x="385" y="205" font-family="Arial" font-size="10" fill="#51CF66" text-anchor="middle">-50%</text>
+  
+  <!-- Boot Time Chart -->
+  <text x="580" y="100" font-family="Arial" font-size="14" font-weight="bold" fill="#fff" text-anchor="middle">Boot Time</text>
+  <text x="580" y="115" font-family="Arial" font-size="10" fill="#888" text-anchor="middle">(seconds)</text>
+  <!-- Stock bar -->
+  <rect x="510" y="125" width="70" height="30" rx="5" fill="url(#stockGrad)"/>
+  <text x="545" y="145" font-family="Arial" font-size="10" fill="#fff" text-anchor="middle">25</text>
+  <!-- NOVA bar -->
+  <rect x="510" y="160" width="42" height="30" rx="5" fill="url(#novaGrad)"/>
+  <text x="531" y="180" font-family="Arial" font-size="10" fill="#fff" text-anchor="middle">15</text>
+  <text x="545" y="205" font-family="Arial" font-size="10" fill="#51CF66" text-anchor="middle">-40%</text>
+  
+  <!-- FPS Stability Chart -->
+  <text x="720" y="100" font-family="Arial" font-size="14" font-weight="bold" fill="#fff" text-anchor="middle">FPS</text>
+  <text x="720" y="115" font-family="Arial" font-size="10" fill="#888" text-anchor="middle">(stability)</text>
+  <!-- Stock bar (variable) -->
+  <rect x="650" y="125" width="70" height="30" rx="5" fill="url(#stockGrad)"/>
+  <text x="685" y="145" font-family="Arial" font-size="10" fill="#fff" text-anchor="middle">45-60</text>
+  <!-- NOVA bar -->
+  <rect x="650" y="160" width="70" height="30" rx="5" fill="url(#novaGrad)"/>
+  <text x="685" y="180" font-family="Arial" font-size="10" fill="#fff" text-anchor="middle">60</text>
+  <text x="685" y="205" font-family="Arial" font-size="10" fill="#51CF66" text-anchor="middle">Locked</text>
+  
+  <!-- Bottom Stats -->
+  <rect x="50" y="250" width="700" height="130" rx="15" fill="#1e1e2e" stroke="#2d2d44" stroke-width="2"/>
+  
+  <text x="400" y="280" font-family="Arial" font-size="16" font-weight="bold" fill="#FFD43B" text-anchor="middle">📈 Overall Performance Improvement</text>
+  
+  <!-- Stats Grid -->
+  <text x="200" y="310" font-family="Arial" font-size="20" font-weight="bold" fill="#00D4FF" text-anchor="middle">50%</text>
+  <text x="200" y="330" font-family="Arial" font-size="10" fill="#888" text-anchor="middle">RAM Saved</text>
+  
+  <text x="400" y="310" font-family="Arial" font-size="20" font-weight="bold" fill="#00D4FF" text-anchor="middle">77%</text>
+  <text x="400" y="330" font-family="Arial" font-size="10" fill="#888" text-anchor="middle">Storage Saved</text>
+  
+  <text x="600" y="310" font-family="Arial" font-size="20" font-weight="bold" fill="#00D4FF" text-anchor="middle">2x</text>
+  <text x="600" y="330" font-family="Arial" font-size="10" fill="#888" text-anchor="middle">Faster Touch</text>
+  
+  <text x="200" y="360" font-family="Arial" font-size="20" font-weight="bold" fill="#51CF66" text-anchor="middle">40%</text>
+  <text x="200" y="375" font-family="Arial" font-size="10" fill="#888" text-anchor="middle">Faster Boot</text>
+  
+  <text x="400" y="360" font-family="Arial" font-size="20" font-weight="bold" fill="#51CF66" text-anchor="middle">Zero</text>
+  <text x="400" y="375" font-family="Arial" font-size="10" fill="#888" text-anchor="middle">FPS Drops</text>
+  
+  <text x="600" y="360" font-family="Arial" font-size="20" font-weight="bold" fill="#51CF66" text-anchor="middle">Full</text>
+  <text x="600" y="375" font-family="Arial" font-size="10" fill="#888" text-anchor="middle">GCam Support</text>
+</svg>
