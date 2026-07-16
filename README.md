@@ -1,4 +1,7 @@
 # NOVA OS
+
+> **Created by Antono**
+
 ### Ultra-Lightweight Android Custom ROM for Gamers & Content Creators
 
 ![NOVA OS Banner](assets/banner.svg)
