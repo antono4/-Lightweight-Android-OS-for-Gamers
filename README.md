@@ -1,2 +1,26 @@
-Last updated: 2026-09-07 00:11:28 WIB
-Last updated: 2026-09-07 01:19:00 WIB
+# -Lightweight-Android-OS-for-Gamers
+
+
+
+## 📋 Overview
+
+This repository contains **14 files** and is built with the following technologies:
+
+HTML
+
+## 🚀 Quick Start
+
+## ✨ Features
+
+- 📝 Auto-generated documentation
+
+## 🛠️ Technologies
+
+HTML
+
+## 📄 License
+
+MIT License
+
+---
+*Last updated: 2026-09-07 01:22:24 WIB*
